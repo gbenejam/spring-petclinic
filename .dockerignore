@@ -1,0 +1,29 @@
+# flyctl launch added from .gitignore
+**/target/*
+**/bin/*
+**/build/*
+**/.gradle/*
+**/.settings/*
+**/.classpath
+**/.project
+**/.factorypath
+**/.attach_pid*
+**/.idea
+**/*.iml
+target
+**/.sts4-cache
+**/.vscode
+**/_site
+**/*.css
+!**/petclinic.css
+
+# flyctl launch added from .idea/.gitignore
+# Default ignored files
+.idea/shelf
+.idea/workspace.xml
+# Editor-based HTTP Client requests
+.idea/httpRequests
+# Datasource local storage ignored files
+.idea/dataSources
+.idea/dataSources.local.xml
+fly.toml
