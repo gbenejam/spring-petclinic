@@ -2,6 +2,19 @@ name: Contrast Security, OWASP ZAP and Snyk Scans
 
 on:
   workflow_call:
+    secrets:
+      PRIVATE_KEY:
+        required: true
+      CONTRAST_API_KEY:
+        required: true
+      CONTRAST_ORGANIZATION_ID:
+        required: true
+      CONTRAST_AUTH_HEADER:
+        required: true
+      CONTRAST_API_URL:
+        required: true
+      SNYK_TOKEN:
+        required: true
 
 jobs:
   contrast_security:
