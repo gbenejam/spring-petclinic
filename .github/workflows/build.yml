@@ -14,11 +14,6 @@ jobs:
   maven_build:
     uses: ./.github/workflows/maven.yml
 
-  deploy:
-    needs: maven_build
-    if: github.ref == 'refs/heads/main'
-    uses: ./.github/workflows/fly.yml
-
   security_scans:
     needs: deploy
     uses: ./.github/workflows/security.yml
