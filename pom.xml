@@ -35,8 +35,10 @@
         <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
         <spring-format.version>0.0.40</spring-format.version>
 
+        <sonar.projectKey>gbenejam_spring-petclinic</sonar.projectKey>
         <sonar.organization>gbenejam</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
 
     </properties>
 
