@@ -51,7 +51,7 @@ jobs:
         run: snyk monitor
 
   zap_scan:
-    needs: synk
+    needs: synk_scan
     runs-on: ubuntu-latest
     steps:
       - name: Run ZAP Baseline Scan
