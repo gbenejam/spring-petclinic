@@ -11,11 +11,11 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  sonarcloud:
-    uses: ./.github/workflows/sonarcloud.yml
+  maven_build:
+    uses: ./.github/workflows/maven.yml
 
   deploy:
-    needs: sonarcloud
+    needs: maven_build
     if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/fly.yml
 
