@@ -15,5 +15,5 @@ jobs:
     uses: ./.github/workflows/maven.yml
 
   security_scans:
-    needs: deploy
+    needs: maven_build
     uses: ./.github/workflows/security.yml
