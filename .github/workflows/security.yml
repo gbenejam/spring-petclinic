@@ -4,15 +4,15 @@ on:
   workflow_call:
     secrets:
       CONTRAST_API_KEY:
-        required: true
+        required: false
       CONTRAST_ORGANIZATION_ID:
-        required: true
+        required: false
       CONTRAST_AUTH_HEADER:
-        required: true
+        required: false
       CONTRAST_API_URL:
-        required: true
+        required: false
       SNYK_TOKEN:
-        required: true
+        required: false
 
 jobs:
   contrast_security:
