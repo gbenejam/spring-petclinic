@@ -1,6 +1,3 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
 name: CI/CD
 
 on:
@@ -28,6 +25,10 @@ jobs:
       - name: Build jar
         run: mvn clean install -DskipTests
 
+      - name: Find built JAR
+        id: find_jar
+        run: echo "::set-output name=jar_path::$(find target -name '*.jar' | head -n 1)"
+
       - name: Contrast SCA Action
         uses: Contrast-Security-OSS/contrast-sca-action@v1
         with:
@@ -35,6 +36,7 @@ jobs:
           orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
+          file: ${{ steps.find_jar.outputs.jar_path }}
           severity: medium
           fail: true
 
@@ -83,4 +85,3 @@ jobs:
         with:
           name: ZAP-Warn-Report
           path: zap_warn.html
-
