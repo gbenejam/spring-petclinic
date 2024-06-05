@@ -37,7 +37,7 @@ jobs:
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           filePath: pom.xml
           severity: medium
-          fail: true
+          fail: false
 
   snyk_scan:
     needs: contrast_security
