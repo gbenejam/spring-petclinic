@@ -86,6 +86,7 @@ jobs:
         uses: zaproxy/action-full-scan@v0.10.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          allow_issue_writing: true
           docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
           target: 'https://spring-petclinic-black-sunset-3933.fly.de'
           rules_file_name: '.zap/rules.tsv'
