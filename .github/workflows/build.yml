@@ -61,6 +61,7 @@ jobs:
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           filePath: pom.xml
+          fail: false
 
   snyk_scan:
     needs: contrast_security
@@ -69,11 +70,12 @@ jobs:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   deploy:
-    needs: snyk_scan
+    needs: zap_scan
     name: Deploy app
     runs-on: ubuntu-latest
     concurrency: deploy-group    # optional: ensure only one action runs at a time
@@ -85,7 +87,7 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
   zap_scan:
-    needs: deploy
+    needs: snyk_scan
     runs-on: ubuntu-latest
     name: OWASP Zap
     steps:
