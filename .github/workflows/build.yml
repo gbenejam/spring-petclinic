@@ -61,7 +61,6 @@ jobs:
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
           apiUrl: ${{ secrets.CONTRAST_API_URL }}
           filePath: pom.xml
-          fail: false
 
   snyk_scan:
     needs: contrast_security
@@ -70,12 +69,23 @@ jobs:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
-        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-  zap_scan:
+  deploy:
     needs: snyk_scan
+    name: Deploy app
+    runs-on: ubuntu-latest
+    concurrency: deploy-group    # optional: ensure only one action runs at a time
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  zap_scan:
+    needs: deploy
     runs-on: ubuntu-latest
     name: OWASP Zap
     steps:
@@ -91,15 +101,3 @@ jobs:
           target: 'https://spring-petclinic-black-sunset-3933.fly.de'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
-
-  deploy:
-    needs: zap_scan
-    name: Deploy app
-    runs-on: ubuntu-latest
-    concurrency: deploy-group    # optional: ensure only one action runs at a time
-    steps:
-      - uses: actions/checkout@v4
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
